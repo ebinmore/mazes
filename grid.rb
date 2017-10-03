@@ -12,7 +12,7 @@ class Grid
   end
 
   def prepare_grid
-    # grid at [0,0] in the upper left -- ie. the SW corner
+    # grid at [0,0] in the top left -- ie. the NW corner
     Array.new(@rows) do |row|
       Array.new(@columns) do |column|
         Cell.new(row, column)

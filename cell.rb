@@ -34,4 +34,8 @@ class Cell
     list << west if west
     list
   end
+
+  def to_s
+    "cell [#{row}, #{column}] north? #{north != nil} east? #{east != nil} south? #{south != nil} west? #{west != nil}"
+  end
 end

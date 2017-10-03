@@ -1,6 +1,7 @@
 require "optparse"
 require_relative "grid"
 require_relative "binary_tree"
+require_relative "sidewinder"
 
 options = {}
 OptionParser.new do |opts|
@@ -11,12 +12,23 @@ OptionParser.new do |opts|
   opts.on('-a', '--algorithm ALGORITHM', 'Algorithm used to create the maze') { |v| options[:algorithm] = v }
 end.parse!
 
+# add some defaults
+options = { rows: 20, columns: 20, algorithm: "binary_tree" }.merge(options)
+
 rows = options[:rows].to_i
 columns = options[:columns].to_i
 
 puts "initializing grid"
 grid = Grid.new(rows, columns)
-puts "grid created! applying binary tree"
-BinaryTree.on(grid)
-puts "binary tree complete!"
+puts "grid created!"
+
+case options[:algorithm]
+when 'binary_tree'
+  print "applying binary tree algorithm to grid..."
+  grid = BinaryTree.on(grid)
+when 'sidewinder'
+  print "applying sidewinder algorithm to grid..."
+  grid = Sidewinder.on(grid)
+end
+puts "complete!"
 puts grid.to_s

@@ -1,6 +1,8 @@
 class Sidewinder
 
-  def self.on(grid)
+  def self.on(grid, bias = :east)
+    primary_boundary =  == :north ? :north : :east
+    secondary_boundary = bias == :north ? :east : :north
 
     grid.each_row do |row|
       run = []
@@ -8,21 +10,18 @@ class Sidewinder
       row.each do |cell|
         run << cell
 
-        at_eastern_boundary = (cell.east == nil)
-        at_northern_boundary = (cell.north == nil)
+        at_primary_boundary = (cell.send(primary_boundary) == nil)
+        at_secondary_boundary = (cell.send(secondary_boundary) == nil)
 
         should_close_out =
-          at_northern_boundary || (!at_eastern_boundary && rand(2) == 0)
-          # at_eastern_boundary || (!at_northern_boundary && rand(2) == 0)
+          at_primary_boundary || (!at_secondary_boundary && rand(2) == 0)
 
         if should_close_out
           member = run.sample
-          # member.link(member.north) if member.north
-          member.link(member.east) if member.east
+          member.link(member.send(secondary_boundary)) if member.send(secondary_boundary)
           run.clear
         else
-          # cell.link(cell.east)
-          cell.link(cell.north)
+          cell.link(cell.send(primary_boundary))
         end
       end
     end

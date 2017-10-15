@@ -26,7 +26,7 @@ puts "grid created!"
 case options[:algorithm]
 when 'binary_tree'
   print "applying binary tree algorithm to grid..."
-  grid = BinaryTree.on(grid)
+  grid = BinaryTree.on(grid, options[:bias])
 when 'sidewinder'
   print "applying sidewinder algorithm to grid..."
   grid = Sidewinder.on(grid, options[:bias])

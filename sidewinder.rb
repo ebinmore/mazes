@@ -1,8 +1,8 @@
 class Sidewinder
 
   def self.on(grid, bias = :east)
-    primary_boundary =  == :north ? :north : :east
-    secondary_boundary = bias == :north ? :east : :north
+    primary_boundary, secondary_boundary =
+      (bias == :north ? [:north, :east] : [:east, :north])
 
     grid.each_row do |row|
       run = []
